@@ -1,5 +1,6 @@
 const contactService = require('../services/contactServices');
 
+// Get all contacts
 exports.getAllContacts = (req, res) => {
     contactService.getAllContacts((err, results) => {
         if (err) {
@@ -9,10 +10,10 @@ exports.getAllContacts = (req, res) => {
     });
 };
 
+// Create a contact
 exports.createContact = (req, res) => {
     const { name, phone, email } = req.body;
-    
-    // Check for required fields
+
     if (!name || !phone || !email) {
         return res.status(400).json({ error: 'Name, phone, and email are required' });
     }
@@ -30,7 +31,6 @@ exports.updateContact = (req, res) => {
     const { id } = req.params;
     const { name, phone, email } = req.body;
 
-    // Check for required fields
     if (!name || !phone || !email) {
         return res.status(400).json({ error: 'Name, phone, and email are required' });
     }
@@ -58,23 +58,19 @@ exports.deleteContact = (req, res) => {
         }
         res.status(200).json({ message: 'Contact deleted successfully' });
     });
+};
 
-    //edit
-
-    // In your contactController.js
-
+// Get a contact by ID
 exports.getContactById = (req, res) => {
-    const { id } = req.params; // Extract the ID from the request parameters
-  
+    const { id } = req.params;
+
     contactService.getContactById(id, (err, contact) => {
-      if (err) {
-        return res.status(500).json({ error: err.message });
-      }
-      if (!contact) {
-        return res.status(404).json({ message: 'Contact not found' });
-      }
-      res.status(200).json(contact);
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        if (!contact) {
+            return res.status(404).json({ message: 'Contact not found' });
+        }
+        res.status(200).json(contact);
     });
-  };
-  
 };

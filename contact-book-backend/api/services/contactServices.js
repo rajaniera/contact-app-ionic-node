@@ -63,25 +63,18 @@ exports.deleteContact = (id, callback) => {
         }
         callback(null, results);
     });
-    
+};
 
-    //edit id
-
-    // In contactServices.js
-
+// Get contact by ID
 exports.getContactById = (id, callback) => {
     const sql = 'SELECT * FROM contacts WHERE id = ?';
     db.query(sql, [id], (err, results) => {
-      if (err) {
-        return callback(err, null);
-      }
-      // Check if a contact was found
-      if (results.length === 0) {
-        return callback(null, null); // No contact found
-      }
-      callback(null, results[0]); // Return the first contact
+        if (err) {
+            return callback(err, null);
+        }
+        if (results.length === 0) {
+            return callback(null, null); 
+        }
+        callback(null, results[0]); 
     });
-  };
-  
-    
-};
+}
